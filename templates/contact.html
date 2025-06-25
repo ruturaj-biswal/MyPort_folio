@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ title }}</title>
+  <link rel="icon" href="./static//images/logo.png">
+  <style>
+
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #213c46;
+    }
+
+    .navbar-container {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        background: #213c46;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .navbar {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+    }
+
+    .nav-brand {
+        font-size: 30px;
+        font-weight: 800;
+        background: linear-gradient(to right, #ff6b81, #f5af19);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 12px rgba(255, 107, 129, 0.5);
+    }
+
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffd700;
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .nav-menu {
+            flex-direction: column;
+            gap: 12px;
+        }
+    }
+</style>
+
+<nav class="navbar-container">
+    <div class="navbar">
+        <a href="{{ url_for('index') }}" class="nav-brand">RuturajX</a>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}" class="nav-link {% if request.path == url_for('index') %}active{% endif %}">Home</a></li>
+            <li><a href="{{ url_for('about') }}" class="nav-link {% if request.path == url_for('about') %}active{% endif %}">About</a></li>
+            <li><a href="{{ url_for('clint') }}" class="nav-link {% if request.path == url_for('clint') %}active{% endif %}">Projects</a></li>
+            <li><a href="{{ url_for('contact') }}" class="nav-link {% if request.path == url_for('contact') %}active{% endif %}">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+  </style>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #163840;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 80px auto;
+      background: #0f2027;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      color: #ffc107;
+      text-shadow: 0 0 6px #ffc107;
+      margin-bottom: 30px;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #eee;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background-color: #1e2a30;
+      color: #eee;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #00bfff;
+      box-shadow: 0 0 8px #00bfff;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #0072ff, #00c6ff);
+    }
+
+    .message {
+      margin-bottom: 20px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        margin: 40px 20px;
+        padding: 30px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Contact Us</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/contact">
+      <label for="name">Your Name</label>
+      <input type="text" name="name" required />
+
+      <label for="email">Your Email</label>
+      <input type="email" name="email" required />
+
+      <label for="message">Your Message</label>
+      <textarea name="message" rows="5" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+</body>
+</html>

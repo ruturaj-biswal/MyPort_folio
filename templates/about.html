@@ -1,0 +1,802 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<!-- Navbar -->
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #213c46;
+    }
+
+    .navbar-container {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        background: #213c46;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .navbar {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+    }
+
+    .nav-brand {
+    font-size: 30px;
+    font-weight: 800;
+    background: linear-gradient(to right, #ff6b81, #f5af19);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 12px rgba(255, 107, 129, 0.5);
+}
+
+
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffd700;
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .nav-menu {
+            flex-direction: column;
+            gap: 12px;
+        }
+    }
+</style>
+
+<nav class="navbar-container">
+    <div class="navbar">
+        <a href="{{ url_for('index') }}" class="nav-brand">RuturajX</a>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}" class="nav-link {% if request.path == url_for('index') %}active{% endif %}">Home</a></li>
+            <li><a href="{{ url_for('about') }}" class="nav-link {% if request.path == url_for('about') %}active{% endif %}">About</a></li>
+            <li><a href="{{ url_for('clint') }}" class="nav-link {% if request.path == url_for('clint') %}active{% endif %}">Projects</a></li>
+            <li><a href="{{ url_for('contact') }}" class="nav-link {% if request.path == url_for('contact') %}active{% endif %}">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #213c46;
+        color: white;
+        overflow-x: hidden;
+    }
+
+    .navbar-container {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        background: #213c46;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .navbar {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+    }
+
+    .nav-brand {
+        font-size: 30px;
+        font-weight: 800;
+        background: linear-gradient(to right, #ff6b81, #f5af19);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 12px rgba(255, 107, 129, 0.5);
+    }
+
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: 0.3s;
+        font-size: 18px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffd700;
+    }
+
+    /* About Section */
+    .about-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 80px 0;
+        background: #213c46;
+    }
+
+    .about-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 80px;
+        align-items: center;
+    }
+
+    /* Left Section */
+    .about-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #333;
+        margin-bottom: 30px;
+    }
+
+    .profile-details {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 40px;
+    }
+
+    .profile-details p {
+        font-size: 16px;
+        color: #888;
+        margin: 8px 0;
+        line-height: 1.6;
+    }
+
+    .profile-details strong {
+        color: #fff;
+    }
+
+    /* Skills Section */
+    .skills-section {
+        width: 100%;
+    }
+
+    .skills-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 25px;
+        text-align: left;
+    }
+
+    .skill-item {
+        margin-bottom: 20px;
+    }
+
+    .skill-name {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .skill-bar {
+        width: 100%;
+        height: 6px;
+        background: #222;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .skill-progress {
+        height: 100%;
+        background: #ffd700;
+        border-radius: 3px;
+        transition: width 0.3s ease;
+    }
+
+    /* Right Section */
+    .about-right {
+        padding-left: 40px;
+    }
+
+    .about-title {
+        font-size: 80px;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 40px;
+        line-height: 0.9;
+        position: relative;
+    }
+
+    .about-title::after {
+        content: 'About Me';
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+        z-index: -1;
+        transform: translate(4px, 4px);
+    }
+
+    .about-description {
+        font-size: 16px;
+        color: #ccc;
+        line-height: 1.8;
+        margin-bottom: 40px;
+        max-width: 600px;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 40px;
+        margin-bottom: 40px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .info-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        min-width: 100px;
+        white-space: nowrap;
+    }
+
+    .info-value {
+        font-size: 14px;
+        color: #888;
+        line-height: 1.5;
+    }
+
+    .projects-count {
+        font-size: 24px;
+        color: #ffd700;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .linkedin-btn {
+        background: #ffd700;
+        color: #000;
+        padding: 12px 30px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .linkedin-btn:hover {
+        background: #e6c200;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .about-container {
+            grid-template-columns: 350px 1fr;
+            gap: 60px;
+        }
+
+        .about-right {
+            padding-left: 20px;
+        }
+
+        .about-title {
+            font-size: 60px;
+        }
+    }
+
+    @media (max-width: 968px) {
+        .about-container {
+            grid-template-columns: 1fr;
+            gap: 60px;
+            text-align: center;
+        }
+
+        .about-left {
+            order: 1;
+        }
+
+        .about-right {
+            order: 2;
+            padding-left: 0;
+        }
+
+        .profile-details {
+            text-align: center;
+        }
+
+        .about-title {
+            font-size: 50px;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .info-item {
+            justify-content: center;
+            text-align: left;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .about-container {
+            padding: 0 20px;
+            gap: 40px;
+        }
+
+        .about-title {
+            font-size: 40px;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+        }
+
+        .about-description {
+            font-size: 14px;
+        }
+
+        .linkedin-btn {
+            padding: 10px 25px;
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .about-section {
+            padding: 40px 0;
+        }
+
+        .about-title {
+            font-size: 32px;
+        }
+
+        .skills-section {
+            margin-top: 30px;
+        }
+    }
+</style>
+
+<div class="about-section">
+    <div class="about-container">
+        <!-- Left Section -->
+        <div class="about-left">
+            <img src="{{ url_for('static', filename='images/salfy.jpg') }}" alt="Profile Image" class="profile-image">
+            
+            <div class="profile-details">
+                <p><strong>Job Role:</strong> SDE </p>
+                <p><strong>Experience:</strong> Freelance Projects  | 2024 - Present</p>
+                <p><strong>Address:</strong> Berhampur, Odisha</p>
+                <p><strong>Birthday:</strong> 30 May 2005</p>
+            </div>
+
+            <div class="skills-section">
+                <h3 class="skills-title">Skills</h3>
+                
+                <div class="skill-item">
+                    <span class="skill-name">Data Structures and Algorithms 70%</span>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 70%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <span class="skill-name">React  JS 85%</span>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <span class="skill-name">Flask 90%</span>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <span class="skill-name">Design Patterns 75%</span>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 75%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <span class="skill-name">OOPs 80%</span>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 80%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="about-right">
+            <h1 class="about-title">About Me</h1>
+            
+            <p class="about-description">
+                I'm a passionate FullStack Developer with a strong foundation in both frontend and backend technologies. Proficient in building dynamic web applications and solving complex problems using Java and DSA. I thrive on learning, building, and optimizing solutions that make an impact, and I'm always eager to take on new challenges.
+            </p>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Domain:</span>
+                    <span class="info-value"> SDE </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Education:</span>
+                    <span class="info-value">Bachelor of Engineering</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Language:</span>
+                    <span class="info-value">English, Hindi, Odia</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Tools:</span>
+                    <span class="info-value">VS CODE, Git & Github, Chrome DevTools, Adobe PremierePro, Blender</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Other Skills:</span>
+                    <span class="info-value">Cloud, UI/UX, Leadership</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Interest:</span>
+                    <span class="info-value">Traveling, Photography, OpenMic</span>
+                </div>
+            </div>
+
+            <div class="projects-count">8 + Projects completed</div>
+            
+            <a href="https://github.com/ruturaj-biswal" target="_blank" class="linkedin-btn">GitHub</a>
+        </div>
+    </div>
+</div>
+
+<!-- Here another session like education -->
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #213c46;
+        color: white;
+    }
+
+    .navbar-container {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        background: #213c46;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .navbar {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+    }
+
+    .nav-brand {
+        font-size: 30px;
+        font-weight: 800;
+        background: linear-gradient(to right, #ff6b81, #f5af19);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 12px rgba(255, 107, 129, 0.5);
+    }
+
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: 0.3s;
+        font-size: 18px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffd700;
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .nav-menu {
+            flex-direction: column;
+            gap: 12px;
+        }
+    }
+
+    .education-section {
+        padding: 80px 20px;
+        background: #213c46;
+        min-height: 100vh;
+    }
+
+    .education-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .education-title {
+        font-size: 48px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .education-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(to right, #ffd700, #ff6b81);
+        border-radius: 2px;
+    }
+
+    .education-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 50px;
+    }
+
+    .education-card {
+        background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 24px;
+        padding: 60px 40px;
+        position: relative;
+        transition: 0.3s ease;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.3);
+    }
+
+    .education-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+        border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .education-year {
+        font-size: 24px;
+        font-weight: 800;
+        color: #ffd700;
+        margin-bottom: 18px;
+        display: inline-block;
+        background: rgba(255, 215, 0, 0.12);
+        padding: 10px 25px;
+        border-radius: 30px;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .education-degree {
+        font-size: 30px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .education-institution {
+        font-size: 18px;
+        color: #ccc;
+        text-transform: uppercase;
+        font-weight: 500;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+
+    .education-grade {
+        font-size: 18px;
+        margin-bottom: 12px;
+        color: #f3f3f3;
+    }
+
+    .grade-label {
+        font-weight: bold;
+        color: #ffd700;
+        margin-right: 10px;
+    }
+
+    .education-description {
+        font-size: 17px;
+        color: #ddd;
+        line-height: 1.7;
+        margin-top: 10px;
+    }
+
+    .achievement-badge {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 6px 18px;
+        border-radius: 20px;
+        background: rgba(255, 107, 129, 0.15);
+        color: #ff6b81;
+        font-weight: 600;
+        font-size: 14px;
+        border: 1px solid rgba(255, 107, 129, 0.3);
+    }
+
+    .download-section {
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    .download-btn {
+        background: linear-gradient(135deg, #ffd700, #f5af19);
+        color: #000;
+        padding: 18px 45px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        border: none;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+        background: linear-gradient(135deg, #e6c200, #f5af19);
+    }
+
+    @media (max-width: 768px) {
+        .education-container {
+            grid-template-columns: 1fr;
+        }
+
+        .education-card {
+            padding: 40px 30px;
+        }
+
+        .education-title {
+            font-size: 36px;
+        }
+
+        .education-degree {
+            font-size: 24px;
+        }
+
+        .download-btn {
+            padding: 16px 35px;
+            font-size: 16px;
+        }
+    }
+</style>
+
+<div class="education-section">
+    <div class="education-header">
+        <h1 class="education-title">Education</h1>
+    </div>
+
+    <div class="education-container">
+        <div class="education-card">
+            <div class="education-year">2023–2027</div>
+            <h2 class="education-degree">Bachelor of Engineering</h2>
+            <p class="education-institution">NIST University, Berhampur</p>
+            <div class="education-grade">
+                <span class="grade-label">CGPA:</span> 7.67
+            </div>
+            <p class="education-description">
+                Currently pursuing Bachelor's with focus on software development, data structures, and modern web technologies. Active in projects and maintaining strong academic performance.
+            </p>
+            <span class="achievement-badge">Current Student</span>
+        </div>
+
+        <div class="education-card">
+            <div class="education-year">2009–2023</div>
+            <h2 class="education-degree">Higher Secondary School</h2>
+            <p class="education-institution">Sri Aurobindo Integral Education</p>
+            <div class="education-grade">
+                <span class="grade-label">Grade:</span> First Distinction
+            </div>
+            <p class="education-description">
+                Completed higher secondary education with distinction. Built strong foundation in math, science, and participated in technical events.
+            </p>
+            <span class="achievement-badge">First Distinction</span>
+        </div>
+    </div>
+
+    <div class="download-section">
+        <a href="https://drive.google.com/drive/folders/1FHSIWlPAaEgYwopiWZhE0GK76ciqFksz" class="download-btn">Download CV</a>
+    </div>
+</div>
+
+
+
+{% endblock %}

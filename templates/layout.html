@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="icon" href="./static//images/logo.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/transition.css') }}">
+</head>
+<body>
+    {% block content %}
+
+    
+    {% endblock %}
+
+    <script src="{{ url_for('static', filename='js/transition.js') }}"></script>
+</body>
+</html>

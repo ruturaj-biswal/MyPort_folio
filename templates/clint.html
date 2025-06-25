@@ -1,0 +1,264 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- Navbar Styling -->
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #213c46;
+    }
+
+    .navbar-container {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        background: #213c46;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .navbar {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+    }
+
+    .nav-brand {
+        font-size: 30px;
+        font-weight: 800;
+        background: linear-gradient(to right, #ff6b81, #f5af19);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 12px rgba(255, 107, 129, 0.5);
+    }
+
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffd700;
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .nav-menu {
+            flex-direction: column;
+            gap: 12px;
+        }
+    }
+</style>
+
+<!-- Navbar -->
+<nav class="navbar-container">
+    <div class="navbar">
+        <a href="{{ url_for('index') }}" class="nav-brand">RuturajX</a>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}" class="nav-link {% if request.path == url_for('index') %}active{% endif %}">Home</a></li>
+            <li><a href="{{ url_for('about') }}" class="nav-link {% if request.path == url_for('about') %}active{% endif %}">About</a></li>
+            <li><a href="{{ url_for('clint') }}" class="nav-link {% if request.path == url_for('clint') %}active{% endif %}">Projects</a></li>
+            <li><a href="{{ url_for('contact') }}" class="nav-link {% if request.path == url_for('contact') %}active{% endif %}">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Projects & Reviews -->
+<style>
+    body {
+        background: #244852;
+        color: #e0e0e0;
+    }
+
+    .project-section {
+        padding: 60px 30px 40px;
+        background: #244852;
+        color: #fff;
+        text-align: center;
+    }
+
+    .project-section h2 {
+        font-size: 42px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: #ffd700;
+        text-transform: uppercase;
+    }
+
+    .project-section p {
+        font-size: 18px;
+        color: #bdbdbd;
+        margin-bottom: 40px;
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .project-card {
+        background: #1e293b;
+        padding: 25px;
+        border-radius: 12px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        text-align: left;
+    }
+
+    .project-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    }
+
+    .project-card h3 {
+        color: #ffffff;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .project-card p {
+        color: #c0c0c0;
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+
+    .project-card a {
+        color: #00ffff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    .project-card a:hover {
+        color: #00c9ff;
+    }
+
+    .github-section {
+        text-align: center;
+        margin-top: 60px;
+        margin-bottom: 50px;
+    }
+
+    .github-section p {
+        font-size: 24px;
+        font-weight: 700;
+        color: #ffd700;
+        margin-bottom: 12px;
+        animation: floatArrow 1.5s infinite ease-in-out;
+    }
+
+    @keyframes floatArrow {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .github-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 18px 42px;
+        font-size: 22px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        color: white;
+        text-decoration: none;
+        border-radius: 999px;
+        box-shadow: 0 8px 30px rgba(0, 114, 255, 0.4);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .github-button:hover {
+        transform: scale(1.08);
+        box-shadow: 0 10px 40px rgba(0, 114, 255, 0.6);
+        background: linear-gradient(135deg, #0072ff, #00c6ff);
+    }
+
+    .github-button img {
+        width: 28px;
+        height: 28px;
+        filter: brightness(0) invert(1);
+    }
+</style>
+
+<section class="project-section">
+    <h2>Created Projects</h2>
+    <p>These are some of the full-stack websites I've designed and developed.</p>
+
+    <div class="project-grid">
+        <div class="project-card">
+            <h3>College Website</h3>
+            <p>A College website built to showcase professional work, skills, and resume with animations and responsive design.</p>
+            <a href="https://github.com/ruturaj-biswal/multimedia" target="_blank">View on GitHub →</a>
+        </div>
+        <div class="project-card">
+            <h3>Phenyl Product Website</h3>
+            <p>An eCommerce-style product showcase website for local phenyl brands, with contact forms and product listings.</p>
+            <a href="https://github.com/your-github-username/phenyl-product-site" target="_blank">View on GitHub →</a>
+        </div>
+        <div class="project-card">
+            <h3>Shoes Product Website</h3>
+            <p>A fullstack website for a shoes store, featuring product listings, a shopping cart, and user authentication.</p>
+            <a href="#" target="_blank">View on GitHub →</a>
+        </div>
+    </div>
+
+    <!-- <h2 style="margin-top: 70px;">Client Reviews</h2>
+    <div class="project-grid">
+        <div class="project-card">
+            <h3>Client: Babun</h3>
+            <p>"The portfolio website was exactly what I needed to land freelance projects. Very clean and fast!"</p>
+        </div>
+        <div class="project-card">
+            <h3>Client: Priya</h3>
+            <p>"Our phenyl website looks amazing! It helped us reach new customers online. Great job Ruturaj."</p>
+        </div>
+        <div class="project-card">
+            <h3>Client: Yash</h3>
+            <p>"The Spotify clone was brilliant. Loved the smooth UI and responsive design. Highly recommend."</p>
+        </div>
+    </div>
+</section> -->
+
+<!-- GitHub Button -->
+<div class="github-section">
+    <p>⬆ For More Projects like game's, Go</p>
+    <a href="https://github.com/your-github-username" target="_blank" class="github-button">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Icon">
+        Visit My GitHub
+    </a>
+</div>
+
+{% endblock %}
