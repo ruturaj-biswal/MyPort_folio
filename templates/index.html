@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<!-- Navbar -->
 <style>
     body {
         margin: 0;
@@ -31,16 +32,15 @@
     }
 
     .nav-brand {
-    font-size: 30px;
-    font-weight: 800;
-    background: linear-gradient(to right, #ff6b81, #f5af19);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 12px rgba(255, 107, 129, 0.5);
-}
-
+        font-size: 30px;
+        font-weight: 800;
+        background: linear-gradient(to right, #ff6b81, #f5af19);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 12px rgba(255, 107, 129, 0.5);
+    }
 
     .nav-menu {
         list-style: none;
@@ -130,15 +130,15 @@
         background: linear-gradient(45deg, #ff6b81, #f5af19);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text; /* Safe fallback */
+        background-clip: text;
     }
 
     .typing-text {
-        font-size: 1.2rem;
-        font-weight: 500;
+        font-size: 2.8rem;  /* Increased size */
+        font-weight: 700;
         color: #ffd700;
-        min-height: 28px;
-        border-right: 2px solid #ffd700;
+        min-height: 60px;
+        border-right: 3px solid #ffd700;
         white-space: nowrap;
         overflow: hidden;
     }
@@ -174,7 +174,7 @@
         }
 
         .typing-text {
-            font-size: 1rem;
+            font-size: 1.8rem; /* Slightly smaller on small screens */
         }
 
         .hero-image-arch {
@@ -188,10 +188,8 @@
 <!-- Typing Animation Script -->
 <script>
     const roles = [
-        "Visual Storyteller",
-        "Digital Product Designer",
-        "Video Editor",
-        "Code + Design Craftsman"
+        "Web Developer",
+        "Programmer",
     ];
 
     let index = 0;
